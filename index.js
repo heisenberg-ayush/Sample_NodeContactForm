@@ -37,12 +37,12 @@ app.post('/send', async(req, res) => {
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "smtp.ethereal.email",
+        host: "smtp.zoho.com",
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: testAccount.user, // generated ethereal user
-            pass: testAccount.pass, // generated ethereal password
+            user: 'test@test.com', // generated ethereal user
+            pass: '-test-', // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false
@@ -51,7 +51,7 @@ app.post('/send', async(req, res) => {
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"Nodemailer Contact 👻" <foo@example.com>', // sender address
+        from: '"Nodemailer Contact 👻" <test@test.com>', // sender address
         to: "bar@example.com, baz@example.com", // list of receivers
         subject: "Node Contact Request", // Subject line
         text: "Hello world?", // plain text body
