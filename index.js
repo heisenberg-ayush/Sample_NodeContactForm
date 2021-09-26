@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const nodemailer = require('nodemailer');
+require("dotenv").config();
 
 const app = express();
 
@@ -37,12 +38,12 @@ app.post('/send', async(req, res) => {
 
     // create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-        host: "smtp.zoho.com",
+        host: process.env.HOST,
         port: 587,
         secure: false, // true for 465, false for other ports
         auth: {
-            user: 'test@test.com', // generated ethereal user
-            pass: '-test-', // generated ethereal password
+            user: process.env.EMAIL, // generated ethereal user
+            pass: process.env.PASS, // generated ethereal password
         },
         tls: {
             rejectUnauthorized: false
@@ -51,8 +52,8 @@ app.post('/send', async(req, res) => {
 
     // send mail with defined transport object
     let info = await transporter.sendMail({
-        from: '"Nodemailer Contact 👻" <test@test.com>', // sender address
-        to: "bar@example.com, baz@example.com", // list of receivers
+        from: `"Nodemailer Contact 👻" <${process.env.EMAIL}>`, // sender address
+        to: req.body.email, // list of receivers
         subject: "Node Contact Request", // Subject line
         text: "Hello world?", // plain text body
         html: output, // html body
